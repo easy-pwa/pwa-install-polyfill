@@ -3,14 +3,14 @@ localStorage.removeItem('pwa-invitation-polyfill');
 
 // Registering a Service Worker (which cache a fake page) to enable the invitation system
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js');
+  navigator.serviceWorker.register('/pwa-install-polyfill/sw.js');
 }
 
 
 window.addEventListener("beforeinstallprompt", function(beforeInstallPromptEvent) {
   //beforeInstallPromptEvent.preventDefault();
   beforeInstallPromptEvent.userChoice.then((choiceResult) => {
-    console.error(choiceResult);
+    console.log(choiceResult);
   });
   //beforeInstallPromptEvent.prompt();
 });
