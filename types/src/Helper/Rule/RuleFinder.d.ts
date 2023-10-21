@@ -1,5 +1,6 @@
-import Context from '../../Context/Context';
-import Translator from '../../Translation/Translator';
+import RuleInterface from './RuleInterface';
+import BrowserContext from '../../Browser/BrowserContext';
 export default class RuleFinder {
-    getHelperTemplate(context: Context, translator: Translator): string | null;
+    findForContext(context: BrowserContext): RuleInterface | null;
+    private getRuleDefinitions;
 }

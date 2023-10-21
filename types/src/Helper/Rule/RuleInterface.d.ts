@@ -1,7 +1,7 @@
-import Context from '../../Context/Context';
+import BrowserContext from '../../Browser/BrowserContext';
 import Translator from '../../Translation/Translator';
 interface RuleInterface {
-    support(context: Context): boolean;
+    support(context: BrowserContext): boolean;
     template(translator: Translator): string;
 }
 export default RuleInterface;

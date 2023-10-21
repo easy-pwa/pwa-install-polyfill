@@ -1,5 +1,5 @@
 {
-  "name": "easy-pwa-js",
+  "name": "pwa-install-polyfill",
   "short_name": "PWA install polyfill",
   "description": "A progressive web app to test.",
   "start_url": "./",
