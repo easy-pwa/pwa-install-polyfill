@@ -18,11 +18,10 @@ You can find a demo on the following url : https://easy-pwa.github.io/pwa-instal
 
 Due to frequently behaviour changes in browsers, it is recommended to import the script with jsDelivr to always have the latest version.
 
-Copy this instruction in your html header.
+Copy this instruction at the end of your html header.
 ``` html
 <header>
 ...
-    <script async src="https://cdn.jsdelivr.net/npm/easy-pwa/pwa-install-polyfill"
-...
+    <script src="https://cdn.jsdelivr.net/npm/@easy-pwa/pwa-install-polyfill" defer="true"></script>
 </header>
 ```
