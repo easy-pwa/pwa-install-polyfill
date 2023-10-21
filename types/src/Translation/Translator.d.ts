@@ -1,10 +1,10 @@
+import LangIdentifier from './LangIdentifier';
 export default class Translator {
-    private static readonly FALLBACK_LANG;
-    private readonly lang;
-    constructor();
+    private readonly langIdentifier;
+    constructor(langIdentifier: LangIdentifier);
+    isSupportedCurrentLang(): boolean;
     translate(key: string, variables?: {
         [key: string]: string;
     }): string;
     private getValueByNestedKey;
-    private getLangName;
 }

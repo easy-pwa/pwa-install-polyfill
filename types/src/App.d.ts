@@ -3,6 +3,7 @@ export default class App {
     private readonly appInfoCollector;
     private readonly ruleFinder;
     private readonly ruleRender;
+    private readonly langIdentifier;
     private readonly translator;
     private readonly helperRenderer;
     private readonly inviteBannerManager;
