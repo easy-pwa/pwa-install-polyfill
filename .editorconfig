@@ -1,0 +1,28 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 120
+
+[*.{css, scss, sass}]
+indent_size = 2
+
+[{*.bash,*.sh,*.zsh}]
+indent_size = 2
+
+[{*.cjs,*.js}]
+indent_size = 2
+
+[{*.har,*.jsb2,*.jsb3,*.json,.babelrc,.eslintrc,.stylelintrc,bowerrc,composer.lock,jest.config}]
+indent_size = 2
+
+[{*.yaml,*.yml}]
+indent_size = 4
+
+[Makefile]
+# Use tabs for indentation (Makefiles require tabs)
+indent_style = tab

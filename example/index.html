@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PWA Install Polyfill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="manifest" href="manifest.webmanifest">
+    <script type="module" src="pwa-install-polyfill.js" defer="true"></script>
+    <script type="module" src="./js/pwa.js" defer="true"></script>
+</head>
+<body>
+    <main>
+        <h1>PWA invite Polyfill</h1>
+        <p>If your browser is compatible, you should see an automatic invitation in some seconds.</p>
+        <p>It only works on mobile phone.</p>
+
+        <h2>Force event for a specific device</h2>
+        <p>Select a browser to force an event in its context</p>
+        <form action="" method="GET" onchange="this.submit()">
+            <div><label for="browser">Browser</label></div>
+            <div>
+                <select id="browser" name="pwa_install_polyfill_debug_user_agent">
+                    <option value="">Select a browser</option>
+                    <option value="Mozilla/5.0 (iPod; CPU iPhone OS 12_0 like macOS) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/12.0 Mobile/14A5335d Safari/602.1.50">
+                        iPhone
+                    </option>
+                    <option value="Mozilla/5.0 (Android 11; Mobile; rv:100.0) Gecko/100.0 Firefox/100.0">
+                        Firefox
+                    </option>
+                    <option value="Mozilla/5.0 (Linux; Android 11; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/17.0 Chrome/91.0.4472.120 Mobile Safari/537.36">
+                        Samsung
+                    </option>
+                </select>
+            </div>
+        </form>
+    </main>
+</body>
+</html>
