@@ -3,7 +3,7 @@ localStorage.removeItem('pwa-invitation-polyfill');
 
 // Registering a Service Worker (which cache a fake page) to enable the invitation system
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js');
+  navigator.serviceWorker.register('sw.js');
 }
 
 
