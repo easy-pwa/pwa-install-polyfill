@@ -1,7 +1,7 @@
 {
   "name": "@easy-pwa/pwa-install-polyfill",
   "version": "0.0.0-version",
-  "description": "Javascript polyfill for enabling BeforeInstallPromptEvent on browsers.",
+  "description": "Polyfill for enabling the BeforeInstallPrompt event (in PWA context) on browsers which do not support it.",
   "main": "dist/pwa-install-polyfill.js",
   "author": "Adrien Peyre",
   "license": "MIT",
@@ -79,6 +79,7 @@
     "easy",
     "build",
     "tool",
+    "beforeinstallprompt",
     "beforeinstallpromptevent",
     "progressive",
     "web",
@@ -88,6 +89,7 @@
     "install",
     "application",
     "light",
-    "polyfill"
+    "polyfill",
+    "ios"
   ]
 }
