@@ -1,13 +1,13 @@
 export default class {
-    public shortName: string;
+  public shortName: string;
 
-    public name: string;
+  public name: string;
 
-    public icon: string;
+  public icon: string;
 
-    constructor(shortName: string, name: string, icon: string) {
-      this.shortName = shortName;
-      this.name = name;
-      this.icon = icon;
-    }
+  constructor(shortName: string, name: string, icon: string) {
+    this.shortName = shortName;
+    this.name = name;
+    this.icon = icon;
+  }
 }
