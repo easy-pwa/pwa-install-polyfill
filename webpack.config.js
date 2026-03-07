@@ -1,5 +1,4 @@
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
 
 const config = {
   mode: 'production',
@@ -17,13 +16,6 @@ const config = {
   },
   module: {
     rules: [
-      {
-        test: /\.(ts|js)$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-        }
-      },
       {
         test: /\.ts$/,
         use: 'ts-loader',
@@ -45,17 +37,9 @@ const config = {
       },
       {
         test: /\.svg$/,
-        use: [
-          {
-            loader: "raw-loader"
-          }
-        ]
+        type: 'asset/source',
       },
     ]
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin()],
   },
   devServer: {
     host: '0.0.0.0',
