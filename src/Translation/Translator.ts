@@ -1,4 +1,4 @@
-import lang from './definitions';
+import lang, { TranslationDict } from './definitions';
 import LangIdentifier from './LangIdentifier';
 
 export default class Translator {
@@ -13,7 +13,7 @@ export default class Translator {
 
   public translate(key: string, variables: { [key: string]: string } = {}): string {
     let translation = this.getValueByNestedKey(lang[this.langIdentifier.getBrowserLang()], key);
-    if (translation === null) {
+    if (translation === undefined) {
       throw new Error(`Translation ${key} not found`);
     }
 
@@ -24,21 +24,14 @@ export default class Translator {
     return translation;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private getValueByNestedKey(translations: any, nestedKey: string): null|string {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let currentValue: any = translations;
-    const keys: string[] = nestedKey.split('.');
-
-    for (let i = 0; i < keys.length; i += 1) {
-      const key = keys[i];
-      if (!(key in currentValue)) {
-        return null;
+  private getValueByNestedKey(translations: TranslationDict, nestedKey: string): string | undefined {
+    let currentValue: string | TranslationDict = translations;
+    for (const key of nestedKey.split('.')) {
+      if (typeof currentValue === 'string' || !(key in currentValue)) {
+        return undefined;
       }
-
       currentValue = currentValue[key];
     }
-
-    return currentValue;
+    return typeof currentValue === 'string' ? currentValue : undefined;
   }
 }

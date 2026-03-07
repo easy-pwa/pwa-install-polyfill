@@ -9,7 +9,7 @@ export default class InviteBannerManager {
   /**
      * Trigger an invite banner. The trigger can be canceled during some seconds by the BeforeInstallPrompt event.
      */
-  trigger(shortName: string, icon: string, acceptHandler: Function, refuseHandler: Function): void {
+  trigger(shortName: string, icon: string, acceptHandler: () => void, refuseHandler: () => void): void {
     this.inviteReference = window.setTimeout(() => {
       const htmlTemplate = this.template(shortName, icon);
       this.show(htmlTemplate, acceptHandler, refuseHandler);
@@ -23,7 +23,7 @@ export default class InviteBannerManager {
     }
   }
 
-  private show(htmlTemplate: string, acceptHandler: Function, refuseHandler: Function): void {
+  private show(htmlTemplate: string, acceptHandler: () => void, refuseHandler: () => void): void {
     const popupContent = document.createElement('div');
     popupContent.classList.add('pwa-homescreen-invite');
     popupContent.innerHTML = htmlTemplate;

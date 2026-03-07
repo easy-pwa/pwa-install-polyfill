@@ -10,8 +10,8 @@ export default class InviteEventDispatcher {
   ) {
   }
 
-  public dispatch(appInfo: AppInfo, htmlHelperTemplate: string, answeredCallback: Function): void {
-    let acceptedUserChoicePromiseResolver!: Function;
+  public dispatch(appInfo: AppInfo, htmlHelperTemplate: string, answeredCallback: () => void): void {
+    let acceptedUserChoicePromiseResolver!: () => void;
     const userChoicePromise = new Promise<BeforeInstallPromptEventUserChoice>(resolve => {
       acceptedUserChoicePromiseResolver = (): void => {
         this.helperRenderer.createHelperPopup(htmlHelperTemplate);
@@ -32,7 +32,7 @@ export default class InviteEventDispatcher {
 
   private dispatchBeforeInstallPromptEvent(
     userChoicePromise: Promise<BeforeInstallPromptEventUserChoice>,
-    userChoicePromiseResolver: Function
+    userChoicePromiseResolver: () => void
   ): void {
     window.dispatchEvent(new BeforeInstallPromptEvent(
       userChoicePromise,
