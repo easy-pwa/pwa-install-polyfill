@@ -3,14 +3,14 @@ export default class BeforeInstallPromptEvent extends CustomEvent<BeforeInstallP
 
   public readonly userChoice: Promise<BeforeInstallPromptEventUserChoice>;
 
-  readonly #userChoicePromiseResolver: Function;
+  readonly #userChoicePromiseResolver: () => void;
 
-  readonly #preventDefaultHandler: Function;
+  readonly #preventDefaultHandler: () => void;
 
   constructor(
     userChoicePromise: Promise<BeforeInstallPromptEventUserChoice>,
-    userChoicePromiseResolver: Function,
-    preventDefaultHandler: Function
+    userChoicePromiseResolver: () => void,
+    preventDefaultHandler: () => void
   ) {
     super('beforeinstallprompt');
 
