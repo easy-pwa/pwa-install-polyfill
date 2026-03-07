@@ -1,3 +1,5 @@
+@use "variables" as *;
+
 .pwa-homescreen-invite {
   z-index: $inviteZIndex;
   position: fixed;
