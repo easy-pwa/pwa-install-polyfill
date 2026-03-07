@@ -18,6 +18,11 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-cond-assign': 'off',
     'no-useless-escape': 'off',
+    'no-empty-function': 'off',
+    '@typescript-eslint/no-empty-function': ['error', { allow: ['constructors'] }],
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error'],
+    "@typescript-eslint/no-unsafe-function-type": 'off',
     "no-useless-constructor": "off",
     "@typescript-eslint/no-useless-constructor": ["error"],
     'quotes': 'error',
@@ -32,8 +37,7 @@ module.exports = {
     {
       'files': 'src/Helper/Rule/Definition/*',
       rules: {
-        '@typescript-eslint/camelcase': 'off',
-        '@typescript-eslint/class-name-casing': 'off',
+        'camelcase': 'off',
       }
     }
   ],
@@ -41,7 +45,9 @@ module.exports = {
     browser: true,
   },
   settings: {
-    'import/resolver': 'webpack',
+    'import/resolver': {
+      typescript: {},
+    },
   },
   parserOptions:  {
     ecmaVersion:  2018,
