@@ -11,17 +11,21 @@ export default class Translator {
     return this.langIdentifier.getBrowserLang() in lang;
   }
 
-  public translate(key: string, variables: { [key: string]: string } = {}): string {
-    let translation = this.getValueByNestedKey(lang[this.langIdentifier.getBrowserLang()], key);
+  public translate(key: string, variables: Record<string, string> = {}): string {
+    const translations = lang[this.langIdentifier.getBrowserLang()];
+    if (translations === undefined) {
+      throw new Error('Unsupported language');
+    }
+
+    const translation = this.getValueByNestedKey(translations, key);
     if (translation === undefined) {
       throw new Error(`Translation ${key} not found`);
     }
 
-    for (const [parameterKey, parameterValue] of Object.entries(variables)) {
-      translation = translation.replace(parameterKey, parameterValue);
-    }
-
-    return translation;
+    return Object.entries(variables).reduce(
+      (acc, [parameterKey, parameterValue]) => acc.replace(parameterKey, parameterValue),
+      translation
+    );
   }
 
   private getValueByNestedKey(translations: TranslationDict, nestedKey: string): string | undefined {
