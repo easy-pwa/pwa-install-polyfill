@@ -4,7 +4,7 @@ import HelperRenderer from './Helper/Render/HelperRenderer';
 import InviteBannerManager from './Invite/InviteBannerManager';
 import AppInfoCollector from './App/AppInfoCollector';
 import RuleRender from './Helper/Rule/RuleRender';
-import BrowserContextFactory from './Browser/BrowserContextFactory';
+import BrowserContextDetector from './Browser/BrowserContextDetector';
 import InviteScheduler from './Invite/InviteScheduler';
 import InviteEventDispatcher from './Invite/InviteEventDispatcher';
 import InviteEligibilityChecker from './Invite/InviteEligibilityChecker';
@@ -26,7 +26,7 @@ export default class App {
 
   private readonly inviteBannerManager: InviteBannerManager;
 
-  private readonly browserContextFactory: BrowserContextFactory;
+  private readonly browserContextDetector: BrowserContextDetector;
 
   private readonly inviteScheduler: InviteScheduler;
 
@@ -42,7 +42,7 @@ export default class App {
     this.translator = new Translator(this.langIdentifier);
     this.helperRenderer = new HelperRenderer();
     this.inviteBannerManager = new InviteBannerManager(this.translator);
-    this.browserContextFactory = new BrowserContextFactory();
+    this.browserContextDetector = new BrowserContextDetector();
     this.inviteScheduler = new InviteScheduler('pwa-invitation-polyfill', 15);
     this.inviteEventDispatcher = new InviteEventDispatcher(this.inviteBannerManager, this.helperRenderer);
     this.inviteEligibilityChecker = new InviteEligibilityChecker(this.inviteScheduler, this.translator);
@@ -55,7 +55,7 @@ export default class App {
 
     await navigator.serviceWorker.ready;
 
-    const browserContext = this.browserContextFactory.getBrowserContext(debug);
+    const browserContext = this.browserContextDetector.getBrowserContext(debug);
     if (browserContext === null) {
       return;
     }
