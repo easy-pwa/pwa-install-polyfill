@@ -1,29 +1,15 @@
 import Translator from '../Translation/Translator';
 
 export default class InviteBannerManager {
-  private inviteReference?: number;
-
   constructor(private readonly translator: Translator) {
   }
 
-  /**
-     * Trigger an invite banner. The trigger can be canceled during some seconds by the BeforeInstallPrompt event.
-     */
-  trigger(shortName: string, icon: string, acceptHandler: () => void, refuseHandler: () => void): void {
-    this.inviteReference = window.setTimeout(() => {
-      const htmlTemplate = this.template(shortName, icon);
-      this.show(htmlTemplate, acceptHandler, refuseHandler);
-    }, 2000);
+  public show(shortName: string, icon: string, acceptHandler: () => void, refuseHandler: () => void): void {
+    const htmlTemplate = this.template(shortName, icon);
+    this.render(htmlTemplate, acceptHandler, refuseHandler);
   }
 
-  public cancel(): void {
-    if (this.inviteReference) {
-      clearTimeout(this.inviteReference);
-      this.inviteReference = undefined;
-    }
-  }
-
-  private show(htmlTemplate: string, acceptHandler: () => void, refuseHandler: () => void): void {
+  private render(htmlTemplate: string, acceptHandler: () => void, refuseHandler: () => void): void {
     const popupContent = document.createElement('div');
     popupContent.classList.add('pwa-homescreen-invite');
     popupContent.innerHTML = htmlTemplate;

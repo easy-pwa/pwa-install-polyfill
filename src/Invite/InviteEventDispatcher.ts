@@ -11,33 +11,25 @@ export default class InviteEventDispatcher {
   }
 
   public dispatch(appInfo: AppInfo, htmlHelperTemplate: string, answeredCallback: () => void): void {
-    let acceptedUserChoicePromiseResolver!: () => void;
+    let promptHandler!: () => void;
     const userChoicePromise = new Promise<BeforeInstallPromptEventUserChoice>(resolve => {
-      acceptedUserChoicePromiseResolver = (): void => {
+      promptHandler = (): void => {
         this.helperRenderer.createHelperPopup(htmlHelperTemplate);
         answeredCallback();
         resolve({ outcome: 'accepted', platform: 'web' });
       };
     });
 
-    this.inviteBannerManager.trigger(
-      appInfo.shortName,
-      appInfo.icon,
-      acceptedUserChoicePromiseResolver,
-      () => { answeredCallback(); }
-    );
+    const event = new BeforeInstallPromptEvent(userChoicePromise, promptHandler);
+    window.dispatchEvent(event);
 
-    this.dispatchBeforeInstallPromptEvent(userChoicePromise, acceptedUserChoicePromiseResolver);
-  }
-
-  private dispatchBeforeInstallPromptEvent(
-    userChoicePromise: Promise<BeforeInstallPromptEventUserChoice>,
-    userChoicePromiseResolver: () => void
-  ): void {
-    window.dispatchEvent(new BeforeInstallPromptEvent(
-      userChoicePromise,
-      userChoicePromiseResolver,
-      () => { this.inviteBannerManager.cancel(); }
-    ));
+    if (!event.defaultPrevented) {
+      this.inviteBannerManager.show(
+        appInfo.shortName,
+        appInfo.icon,
+        promptHandler,
+        () => { answeredCallback(); }
+      );
+    }
   }
 }
