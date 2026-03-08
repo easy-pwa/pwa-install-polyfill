@@ -6,8 +6,8 @@ import AppInfoCollector from './App/AppInfoCollector';
 import RuleRender from './Helper/Rule/RuleRender';
 import BrowserContextDetector from './Browser/BrowserContextDetector';
 import InviteScheduler from './Invite/InviteScheduler';
-import InviteEventDispatcher from './Invite/InviteEventDispatcher';
-import InviteEligibilityChecker from './Invite/InviteEligibilityChecker';
+import BeforeInstallPromptDispatcher from './BeforeInstallPrompt/BeforeInstallPromptDispatcher';
+import BeforeInstallPromptEligibilityChecker from './BeforeInstallPrompt/BeforeInstallPromptEligibilityChecker';
 import DebugConfig from './Debug/DebugConfig';
 import LangIdentifier from './Translation/LangIdentifier';
 
@@ -30,9 +30,9 @@ export default class App {
 
   private readonly inviteScheduler: InviteScheduler;
 
-  private readonly inviteEventDispatcher: InviteEventDispatcher;
+  private readonly beforeInstallPromptDispatcher: BeforeInstallPromptDispatcher;
 
-  private readonly inviteEligibilityChecker: InviteEligibilityChecker;
+  private readonly eligibilityChecker: BeforeInstallPromptEligibilityChecker;
 
   constructor() {
     this.appInfoCollector = new AppInfoCollector();
@@ -44,12 +44,12 @@ export default class App {
     this.inviteBannerManager = new InviteBannerManager(this.translator);
     this.browserContextDetector = new BrowserContextDetector();
     this.inviteScheduler = new InviteScheduler('pwa-invitation-polyfill', 15);
-    this.inviteEventDispatcher = new InviteEventDispatcher(this.inviteBannerManager, this.helperRenderer);
-    this.inviteEligibilityChecker = new InviteEligibilityChecker(this.inviteScheduler, this.translator);
+    this.beforeInstallPromptDispatcher = new BeforeInstallPromptDispatcher();
+    this.eligibilityChecker = new BeforeInstallPromptEligibilityChecker(this.translator);
   }
 
   public async start(debug: DebugConfig): Promise<void> {
-    if (!this.inviteEligibilityChecker.isEligibleToInvite()) {
+    if (!this.eligibilityChecker.isEligible()) {
       return;
     }
 
@@ -63,13 +63,21 @@ export default class App {
     const appInfo = await this.appInfoCollector.getAppInfo();
 
     const foundRule = this.ruleFinder.findForContext(browserContext);
-    if (foundRule !== null) {
-      const htmlHelperTemplate = this.ruleRender.getHelperTemplate(foundRule, this.translator);
-      this.inviteEventDispatcher.dispatch(
-        appInfo,
-        htmlHelperTemplate,
-        () => { this.inviteScheduler.storeLastInviteAnsweredAt(new Date()); }
-      );
+    if (foundRule === null) {
+      return;
+    }
+
+    const answeredCallback = (): void => { this.inviteScheduler.storeLastInviteAnsweredAt(new Date()); };
+    const htmlHelperTemplate = this.ruleRender.getHelperTemplate(foundRule, this.translator);
+    const promptCallback = (): void => {
+      this.helperRenderer.createHelperPopup(htmlHelperTemplate);
+      answeredCallback();
+    };
+
+    const event = this.beforeInstallPromptDispatcher.dispatch(promptCallback);
+
+    if (!event.defaultPrevented && this.inviteScheduler.isTime()) {
+      this.inviteBannerManager.show(appInfo, () => event.prompt(), answeredCallback);
     }
   }
 }

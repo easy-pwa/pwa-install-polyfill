@@ -1,22 +1,16 @@
-import InviteEligibilityChecker from '../../src/Invite/InviteEligibilityChecker';
-import InviteScheduler from '../../src/Invite/InviteScheduler';
+import BeforeInstallPromptEligibilityChecker from '../../src/BeforeInstallPrompt/BeforeInstallPromptEligibilityChecker';
 import Translator from '../../src/Translation/Translator';
 
-jest.mock('../../src/Invite/InviteScheduler');
 jest.mock('../../src/Translation/Translator');
 
-let mockScheduler: jest.Mocked<InviteScheduler>;
-let mockTranslator: jest.Mocked<Translator>;
-let checker: InviteEligibilityChecker;
+const mockIsSupportedCurrentLang = jest.fn().mockReturnValue(true);
+const mockTranslator = { isSupportedCurrentLang: mockIsSupportedCurrentLang } as unknown as jest.Mocked<Translator>;
+
+let checker: BeforeInstallPromptEligibilityChecker;
 
 beforeEach(() => {
   jest.clearAllMocks();
-
-  mockScheduler = new InviteScheduler('', 0) as jest.Mocked<InviteScheduler>;
-  mockTranslator = new Translator(null as any) as jest.Mocked<Translator>;
-
-  mockScheduler.isTime.mockReturnValue(true);
-  mockTranslator.isSupportedCurrentLang.mockReturnValue(true);
+  mockIsSupportedCurrentLang.mockReturnValue(true);
 
   // jsdom does not implement serviceWorker, add it manually
   Object.defineProperty(navigator, 'serviceWorker', { value: {}, configurable: true });
@@ -28,7 +22,7 @@ beforeEach(() => {
     value: jest.fn().mockReturnValue({ matches: false }),
   });
 
-  checker = new InviteEligibilityChecker(mockScheduler, mockTranslator);
+  checker = new BeforeInstallPromptEligibilityChecker(mockTranslator);
 });
 
 afterEach(() => {
@@ -38,29 +32,24 @@ afterEach(() => {
 
 test('returns false when service worker is not available', () => {
   delete (navigator as any).serviceWorker;
-  expect(checker.isEligibleToInvite()).toBe(false);
+  expect(checker.isEligible()).toBe(false);
 });
 
 test('returns false when language is not supported', () => {
-  mockTranslator.isSupportedCurrentLang.mockReturnValue(false);
-  expect(checker.isEligibleToInvite()).toBe(false);
+  mockIsSupportedCurrentLang.mockReturnValue(false);
+  expect(checker.isEligible()).toBe(false);
 });
 
 test('returns false when in standalone display mode', () => {
   (window.matchMedia as jest.Mock).mockReturnValue({ matches: true });
-  expect(checker.isEligibleToInvite()).toBe(false);
+  expect(checker.isEligible()).toBe(false);
 });
 
 test('returns false when in iOS standalone app mode', () => {
   Object.defineProperty(window.navigator, 'standalone', { value: true, configurable: true });
-  expect(checker.isEligibleToInvite()).toBe(false);
-});
-
-test('returns false when scheduler says it is not time yet', () => {
-  mockScheduler.isTime.mockReturnValue(false);
-  expect(checker.isEligibleToInvite()).toBe(false);
+  expect(checker.isEligible()).toBe(false);
 });
 
 test('returns true when all conditions are met', () => {
-  expect(checker.isEligibleToInvite()).toBe(true);
+  expect(checker.isEligible()).toBe(true);
 });
