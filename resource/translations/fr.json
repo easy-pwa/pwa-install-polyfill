@@ -1,5 +1,7 @@
 {
   "helper": {
+    "title": "Installer %app_name%",
+    "done": "C'est fait !",
     "introduction": "Pour installer cette application et profiter d'une expérience améliorée",
     "ios": {
       "label": "Ajout en &eacute;cran d'accueil"
