@@ -1,6 +1,7 @@
 import RuleFinder from './Helper/Rule/RuleFinder';
 import Translator from './Translation/Translator';
 import HelperRenderer from './Helper/Render/HelperRenderer';
+import PromptRenderer from './Prompt/PromptRenderer';
 import AppInfoCollector from './App/AppInfoCollector';
 import RuleRender from './Helper/Rule/RuleRender';
 import BrowserContextDetector from './Browser/BrowserContextDetector';
@@ -22,6 +23,8 @@ export default class App {
 
   private readonly helperRenderer: HelperRenderer;
 
+  private readonly promptRenderer: PromptRenderer;
+
   private readonly browserContextDetector: BrowserContextDetector;
 
   private readonly beforeInstallPromptDispatcher: BeforeInstallPromptDispatcher;
@@ -35,8 +38,9 @@ export default class App {
     this.langIdentifier = new LangIdentifier();
     this.translator = new Translator(this.langIdentifier);
     this.helperRenderer = new HelperRenderer();
+    this.promptRenderer = new PromptRenderer();
     this.browserContextDetector = new BrowserContextDetector();
-    this.beforeInstallPromptDispatcher = new BeforeInstallPromptDispatcher();
+    this.beforeInstallPromptDispatcher = new BeforeInstallPromptDispatcher(this.promptRenderer);
     this.eligibilityChecker = new BeforeInstallPromptEligibilityChecker(this.translator);
   }
 
@@ -60,10 +64,10 @@ export default class App {
     }
 
     const htmlHelperTemplate = this.ruleRender.getHelperTemplate(foundRule, this.translator);
-    const promptCallback = (): void => {
+    const helperCallback = (): void => {
       this.helperRenderer.createHelperPopup(htmlHelperTemplate);
     };
 
-    this.beforeInstallPromptDispatcher.dispatch(promptCallback);
+    this.beforeInstallPromptDispatcher.dispatch(appInfo, helperCallback);
   }
 }
