@@ -2,20 +2,20 @@
   "helper": {
     "title": "Installer %app_name%",
     "done": "C'est fait !",
-    "introduction": "Pour installer cette application et profiter d'une expérience améliorée",
     "ios": {
-      "label": "Ajout en &eacute;cran d'accueil"
+      "step1": "Appuyer sur l'icône de partage",
+      "step2": "Sélectionner «\u00a0Ajouter à l'écran d'accueil\u00a0»",
+      "step3": "Confirmer en appuyant sur «\u00a0Ajouter\u00a0»"
     },
     "firefox": {
-      "label": "Installer"
+      "step1": "Appuyer sur le menu",
+      "step2": "Si nécessaire, appuyer sur «\u00a0Plus\u00a0»",
+      "step3": "Appuyer sur «\u00a0Ajouter l'application à l'écran d'accueil\u00a0»"
     },
     "samsung": {
-      "label_1": "Ajouter la page à",
-      "label_2": "Ecran d'accueil"
+      "step1": "Appuyer sur le menu",
+      "step2": "Sélectionner «\u00a0Ajouter à\u00a0»",
+      "step3": "Puis sélectionner «\u00a0Écran d'accueil\u00a0»"
     }
-  },
-  "press_on": "presser sur",
-  "then": "puis",
-  "and_then": "et ensuite",
-  "select": "s&eacute;lectionner"
+  }
 }

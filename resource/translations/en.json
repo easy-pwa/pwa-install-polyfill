@@ -2,20 +2,20 @@
   "helper": {
     "title": "Install %app_name%",
     "done": "Done!",
-    "introduction": "To install this application and enjoy an improved experience",
     "ios": {
-      "label": "Add to Home Screen"
+      "step1": "Tap the share icon",
+      "step2": "Select «\u00a0Add to Home Screen\u00a0»",
+      "step3": "Confirm by tapping «\u00a0Add\u00a0»"
     },
     "firefox": {
-      "label": "Install"
+      "step1": "Tap the menu",
+      "step2": "If needed, tap «\u00a0More\u00a0»",
+      "step3": "Tap «\u00a0Add app to Home screen\u00a0»"
     },
     "samsung": {
-      "label_1": "Add the page...",
-      "label_2": "Home screen"
+      "step1": "Tap the menu",
+      "step2": "Select «\u00a0Add to\u00a0»",
+      "step3": "Then select «\u00a0Home Screen\u00a0»"
     }
-  },
-  "press_on": "tap on",
-  "then": "then",
-  "and_then": "and then",
-  "select": "select"
+  }
 }
