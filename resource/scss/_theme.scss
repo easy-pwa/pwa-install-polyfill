@@ -1,0 +1,29 @@
+// Light theme tokens (default)
+:root {
+  --pwa-bg:               #ffffff;
+  --pwa-color:            #202124;
+  --pwa-color-muted:      #5f6368;
+  --pwa-step-num-bg:      #e8f0fe;
+  --pwa-step-num-color:   #1a73e8;
+  --pwa-btn-cancel:       #5f6368;
+  --pwa-btn-cancel-hover: rgba(95, 99, 104, 0.08);
+  --pwa-btn-accent:       #1a73e8;
+  --pwa-btn-accent-hover: rgba(26, 115, 232, 0.08);
+  --pwa-shadow:           0 4px 24px rgba(0, 0, 0, 0.18);
+}
+
+// Dark theme tokens
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pwa-bg:               #1e1e1e;
+    --pwa-color:            #e8eaed;
+    --pwa-color-muted:      #9aa0a6;
+    --pwa-step-num-bg:      #3c4043;
+    --pwa-step-num-color:   #e8eaed;
+    --pwa-btn-cancel:       #9aa0a6;
+    --pwa-btn-cancel-hover: rgba(255, 255, 255, 0.08);
+    --pwa-btn-accent:       #8ab4f8;
+    --pwa-btn-accent-hover: rgba(138, 180, 248, 0.08);
+    --pwa-shadow:           none;
+  }
+}
