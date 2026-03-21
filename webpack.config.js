@@ -7,7 +7,7 @@ const config = {
   },
   target: ['web', 'es2020'],
   output: {
-    filename: 'pwa-install-polyfill.js',
+    filename: 'beforeinstallprompt-polyfill.js',
     path: path.resolve(__dirname, 'dist'),
     library: {
       name: 'pwaInstallPolyfill',

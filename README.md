@@ -1,4 +1,4 @@
-# PWA Install Polyfill
+# BeforeInstallPrompt Polyfill
 
 [![npm version](https://img.shields.io/npm/v/@easy-pwa/beforeinstallprompt-polyfill)](https://www.npmjs.com/package/@easy-pwa/beforeinstallprompt-polyfill)
 [![license](https://img.shields.io/npm/l/@easy-pwa/beforeinstallprompt-polyfill)](https://github.com/easy-pwa/beforeinstallprompt-polyfill/blob/main/LICENSE)
@@ -22,7 +22,7 @@ Using jsDelivr is recommended so your users always get install instructions up t
 ```html
 <head>
     ...
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@easy-pwa/pwa-install-polyfill@1"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@easy-pwa/beforeinstallprompt-polyfill@1"></script>
 </head>
 ```
 
@@ -54,7 +54,7 @@ document.getElementById('install-button').addEventListener('click', async () => 
 
 ## Demo
 
-https://easy-pwa.github.io/pwa-install-polyfill/
+https://easy-pwa.github.io/beforeinstallprompt-polyfill/
 
 ## Languages
 

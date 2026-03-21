@@ -1,8 +1,8 @@
 {
-  "name": "@easy-pwa/pwa-install-polyfill",
+  "name": "@easy-pwa/beforeinstallprompt-polyfill",
   "version": "0.0.0-version",
   "description": "Polyfill for enabling the BeforeInstallPrompt event (in PWA context) on browsers which do not support it.",
-  "main": "dist/pwa-install-polyfill.js",
+  "main": "dist/beforeinstallprompt-polyfill.js",
   "author": "Adrien Peyre",
   "license": "MIT",
   "files": [
@@ -10,11 +10,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/easy-pwa/pwa-install-polyfill"
+    "url": "git+ssh://git@github.com/easy-pwa/beforeinstallprompt-polyfill"
   },
-  "homepage": "https://github.com/easy-pwa/pwa-install-polyfill/main/README.md",
+  "homepage": "https://github.com/easy-pwa/beforeinstallprompt-polyfill/main/README.md",
   "bugs": {
-    "url": "https://github.com/easy-pwa/pwa-install-polyfill/issues"
+    "url": "https://github.com/easy-pwa/beforeinstallprompt-polyfill/issues"
   },
   "dependencies": {
     "detect-browser": "^5.3.0",
