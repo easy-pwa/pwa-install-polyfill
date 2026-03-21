@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PWA Install Polyfill</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="app.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <!-- type="module" is used intentionally to prevent loading on old browsers:
+         browsers that don't support ES modules will silently ignore this script.
+         defer is implicit with type="module". -->
+    <script type="module" src="pwa-install-polyfill.js"></script>
+    <script src="./js/pwa.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="header-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                <span>PWA Install Polyfill</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>What is this?</h2>
+            <p>
+                This polyfill dispatches a synthetic <code>BeforeInstallPromptEvent</code> on browsers
+                that don't natively support it.
+                When <code>event.prompt()</code> is called, it shows a Chrome-like install dialog,
+                then step-by-step instructions specific to the user's browser.
+            </p>
+        </section>
+
+<section id="event-status" class="card status" hidden>
+            <div class="status-dot"></div>
+            <p><code>beforeinstallprompt</code> event fired — <a href="#" id="prompt-link">show install dialog</a></p>
+        </section>
+
+        <section id="native-support-notice" class="card notice" hidden>
+            <p>Your browser natively supports <code>BeforeInstallPromptEvent</code>. To test the polyfill, open this page in private browsing mode or in a browser that does not support it natively.</p>
+        </section>
+
+        <section id="debug-section" class="card">
+            <h2>Debug</h2>
+            <p>Override the user agent to simulate a specific browser and trigger the install flow.</p>
+            <form action="" method="GET" onchange="this.submit()">
+                <label for="browser">Simulate browser</label>
+                <select id="browser" name="pwa_install_polyfill_debug_user_agent">
+                    <option value="">— select a browser —</option>
+                    <option value="Mozilla/5.0 (iPod; CPU iPhone OS 12_0 like macOS) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/12.0 Mobile/14A5335d Safari/602.1.50">
+                        iOS Safari 12
+                    </option>
+                    <option value="Mozilla/5.0 (Android 14; Mobile; rv:130.0) Gecko/130.0 Firefox/130.0">
+                        Android Firefox 130
+                    </option>
+                    <option value="Mozilla/5.0 (Linux; Android 14; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/24.0 Chrome/117.0.0.0 Mobile Safari/537.36">
+                        Samsung Browser 24
+                    </option>
+                </select>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

@@ -16,10 +16,10 @@ jobs:
           node-version: 24.x
       - run: npm install
       - run: npm run build
-      - run: cp -r ./dist/* ./example/
+      - run: cp -r ./dist/* ./demo/
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: ./example
+            publish_dir: ./demo
             publish_branch: gh-pages
