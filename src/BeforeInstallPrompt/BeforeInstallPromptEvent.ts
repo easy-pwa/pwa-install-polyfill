@@ -5,6 +5,8 @@ export default class BeforeInstallPromptEvent extends CustomEvent<BeforeInstallP
 
   readonly #promptHandler: () => void;
 
+  #prompted: boolean = false;
+
   constructor(
     userChoicePromise: Promise<BeforeInstallPromptEventUserChoice>,
     promptHandler: () => void
@@ -15,8 +17,11 @@ export default class BeforeInstallPromptEvent extends CustomEvent<BeforeInstallP
     this.#promptHandler = promptHandler;
   }
 
-  public prompt(): Promise<void> {
-    this.#promptHandler();
-    return Promise.resolve();
+  public prompt(): Promise<BeforeInstallPromptEventUserChoice> {
+    if (!this.#prompted) {
+      this.#prompted = true;
+      this.#promptHandler();
+    }
+    return this.userChoice;
   }
 }

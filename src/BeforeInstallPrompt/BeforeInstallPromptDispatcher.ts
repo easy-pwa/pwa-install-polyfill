@@ -1,14 +1,24 @@
 import BeforeInstallPromptEvent from './BeforeInstallPromptEvent';
+import PromptRenderer from '../Prompt/PromptRenderer';
+import AppInfo from '../App/AppInfo';
 
 export default class BeforeInstallPromptDispatcher {
-  public dispatch(promptCallback: () => void): BeforeInstallPromptEvent {
-    let promptHandler!: () => void;
+  constructor(private readonly promptRenderer: PromptRenderer) {}
+
+  public dispatch(appInfo: AppInfo, helperCallback: () => void): BeforeInstallPromptEvent {
+    let resolveUserChoice!: (value: BeforeInstallPromptEventUserChoice) => void;
     const userChoicePromise = new Promise<BeforeInstallPromptEventUserChoice>(resolve => {
-      promptHandler = (): void => {
-        promptCallback();
-        resolve({ outcome: 'accepted', platform: 'web' });
-      };
+      resolveUserChoice = resolve;
     });
+
+    const promptHandler = (): void => {
+      this.promptRenderer.showPrompt(appInfo).then(result => {
+        if (result.outcome === 'accepted') {
+          helperCallback();
+        }
+        resolveUserChoice(result);
+      });
+    };
 
     const event = new BeforeInstallPromptEvent(userChoicePromise, promptHandler);
     window.dispatchEvent(event);
