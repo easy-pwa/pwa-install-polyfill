@@ -12,17 +12,9 @@
   max-width: 380px;
   width: calc(100% - 48px);
   font-family: sans-serif;
-
-  @media (prefers-color-scheme: dark) {
-    background-color: #1e1e1e;
-    color: #e8eaed;
-  }
-
-  @media (prefers-color-scheme: light) {
-    background-color: #ffffff;
-    color: #202124;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
-  }
+  background-color: var(--pwa-bg);
+  color: var(--pwa-color);
+  box-shadow: var(--pwa-shadow);
 }
 
 .pwa-install-prompt-header {
@@ -47,14 +39,7 @@
 .pwa-install-prompt-app-domain {
   font-size: 0.85rem;
   margin-top: 2px;
-
-  @media (prefers-color-scheme: dark) {
-    color: #9aa0a6;
-  }
-
-  @media (prefers-color-scheme: light) {
-    color: #5f6368;
-  }
+  color: var(--pwa-color-muted);
 }
 
 .pwa-install-prompt-actions {
@@ -76,39 +61,15 @@
 }
 
 .pwa-install-prompt-cancel {
-  @media (prefers-color-scheme: dark) {
-    color: #9aa0a6;
+  color: var(--pwa-btn-cancel);
 
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.08);
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    color: #5f6368;
-
-    &:hover {
-      background-color: rgba(95, 99, 104, 0.08);
-    }
-  }
+  &:hover { background-color: var(--pwa-btn-cancel-hover); }
 }
 
 .pwa-install-prompt-install {
-  @media (prefers-color-scheme: dark) {
-    color: #8ab4f8;
+  color: var(--pwa-btn-accent);
 
-    &:hover {
-      background-color: rgba(138, 180, 248, 0.08);
-    }
-  }
-
-  @media (prefers-color-scheme: light) {
-    color: #1a73e8;
-
-    &:hover {
-      background-color: rgba(26, 115, 232, 0.08);
-    }
-  }
+  &:hover { background-color: var(--pwa-btn-accent-hover); }
 }
 
 .pwa-install-prompt-mask {
