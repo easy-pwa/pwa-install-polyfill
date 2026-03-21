@@ -1,5 +1,7 @@
 {
   "helper": {
+    "title": "Install %app_name%",
+    "done": "Done!",
     "introduction": "To install this application and enjoy an improved experience",
     "ios": {
       "label": "Add to Home Screen"

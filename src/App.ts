@@ -37,7 +37,7 @@ export default class App {
     this.ruleRender = new RuleRender();
     this.langIdentifier = new LangIdentifier();
     this.translator = new Translator(this.langIdentifier);
-    this.helperRenderer = new HelperRenderer();
+    this.helperRenderer = new HelperRenderer(this.translator);
     this.promptRenderer = new PromptRenderer();
     this.browserContextDetector = new BrowserContextDetector();
     this.beforeInstallPromptDispatcher = new BeforeInstallPromptDispatcher(this.promptRenderer);
@@ -65,7 +65,7 @@ export default class App {
 
     const htmlHelperTemplate = this.ruleRender.getHelperTemplate(foundRule, this.translator);
     const helperCallback = (): void => {
-      this.helperRenderer.createHelperPopup(htmlHelperTemplate);
+      this.helperRenderer.createHelperPopup(htmlHelperTemplate, appInfo);
     };
 
     this.beforeInstallPromptDispatcher.dispatch(appInfo, helperCallback);
