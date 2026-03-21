@@ -1,11 +1,9 @@
 import RuleFinder from './Helper/Rule/RuleFinder';
 import Translator from './Translation/Translator';
 import HelperRenderer from './Helper/Render/HelperRenderer';
-import InviteBannerManager from './Invite/InviteBannerManager';
 import AppInfoCollector from './App/AppInfoCollector';
 import RuleRender from './Helper/Rule/RuleRender';
 import BrowserContextDetector from './Browser/BrowserContextDetector';
-import InviteScheduler from './Invite/InviteScheduler';
 import BeforeInstallPromptDispatcher from './BeforeInstallPrompt/BeforeInstallPromptDispatcher';
 import BeforeInstallPromptEligibilityChecker from './BeforeInstallPrompt/BeforeInstallPromptEligibilityChecker';
 import DebugConfig from './Debug/DebugConfig';
@@ -24,11 +22,7 @@ export default class App {
 
   private readonly helperRenderer: HelperRenderer;
 
-  private readonly inviteBannerManager: InviteBannerManager;
-
   private readonly browserContextDetector: BrowserContextDetector;
-
-  private readonly inviteScheduler: InviteScheduler;
 
   private readonly beforeInstallPromptDispatcher: BeforeInstallPromptDispatcher;
 
@@ -41,9 +35,7 @@ export default class App {
     this.langIdentifier = new LangIdentifier();
     this.translator = new Translator(this.langIdentifier);
     this.helperRenderer = new HelperRenderer();
-    this.inviteBannerManager = new InviteBannerManager(this.translator);
     this.browserContextDetector = new BrowserContextDetector();
-    this.inviteScheduler = new InviteScheduler('pwa-invitation-polyfill', 15);
     this.beforeInstallPromptDispatcher = new BeforeInstallPromptDispatcher();
     this.eligibilityChecker = new BeforeInstallPromptEligibilityChecker(this.translator);
   }
@@ -67,17 +59,11 @@ export default class App {
       return;
     }
 
-    const answeredCallback = (): void => { this.inviteScheduler.storeLastInviteAnsweredAt(new Date()); };
     const htmlHelperTemplate = this.ruleRender.getHelperTemplate(foundRule, this.translator);
     const promptCallback = (): void => {
       this.helperRenderer.createHelperPopup(htmlHelperTemplate);
-      answeredCallback();
     };
 
-    const event = this.beforeInstallPromptDispatcher.dispatch(promptCallback);
-
-    if (!event.defaultPrevented && this.inviteScheduler.isTime()) {
-      this.inviteBannerManager.show(appInfo, () => event.prompt(), answeredCallback);
-    }
+    this.beforeInstallPromptDispatcher.dispatch(promptCallback);
   }
 }
