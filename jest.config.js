@@ -5,7 +5,7 @@ module.exports = {
         '^.+\\.ts?$': 'ts-jest',
     },
     moduleNameMapper: {
-        "^.+\\.svg$": "jest-svg-transformer",
+        "^.+\\.svg$": "<rootDir>/tests/__mocks__/svgMock.js",
     },
     transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };

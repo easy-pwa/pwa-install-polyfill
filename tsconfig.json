@@ -4,9 +4,9 @@
     "strict": true,
     "experimentalDecorators": true,
     "noImplicitAny": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "module": "commonjs",
+    "module": "ESNext",
     "esModuleInterop": true,
     "target": "esnext",
     "lib": [
