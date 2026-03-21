@@ -5,14 +5,17 @@ const config = {
   entry: {
     'index': ['./src/index.ts'],
   },
+  target: ['web', 'es2020'],
   output: {
     filename: 'pwa-install-polyfill.js',
     path: path.resolve(__dirname, 'dist'),
-    libraryTarget: 'umd',
-    library: 'pwaInstallPolyfill'
+    library: {
+      name: 'pwaInstallPolyfill',
+      type: 'umd',
+    },
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json', '.d.ts', '.svg']
+    extensions: ['.ts', '.js', '.json']
   },
   module: {
     rules: [
