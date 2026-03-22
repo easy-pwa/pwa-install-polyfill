@@ -16,7 +16,7 @@ export default class {
       browserInfo.os,
       browserInfo.name,
       parseFloat(browserInfo.version),
-      this.languageDetector.detect()
+      this.languageDetector.detect(debug)
     );
   }
 }
