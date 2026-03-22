@@ -8,7 +8,7 @@ test.each(rulesCases)('$useragent $expectedRule', ({ useragent, expectedRule }) 
   expect(browserInfo).not.toBeNull();
   if (!browserInfo) return;
 
-  const browserContext = new BrowserContext(browserInfo.os!, browserInfo.name, parseFloat(browserInfo.version!));
+  const browserContext = new BrowserContext(browserInfo.os!, browserInfo.name, parseFloat(browserInfo.version!), 'fr');
   const ruleFinder = new RuleFinder();
   const rule = ruleFinder.findForContext(browserContext);
   if (expectedRule === undefined) {

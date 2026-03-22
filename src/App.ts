@@ -5,10 +5,10 @@ import PromptRenderer from './Prompt/PromptRenderer';
 import AppInfoCollector from './App/AppInfoCollector';
 import RuleRender from './Helper/Rule/RuleRender';
 import BrowserContextDetector from './Browser/BrowserContextDetector';
+import BrowserLanguageDetector from './Browser/BrowserLanguageDetector';
 import BeforeInstallPromptDispatcher from './BeforeInstallPrompt/BeforeInstallPromptDispatcher';
 import BeforeInstallPromptEligibilityChecker from './BeforeInstallPrompt/BeforeInstallPromptEligibilityChecker';
 import DebugConfig from './Debug/DebugConfig';
-import LangIdentifier from './Translation/LangIdentifier';
 
 export default class App {
   private readonly appInfoCollector: AppInfoCollector;
@@ -17,13 +17,13 @@ export default class App {
 
   private readonly ruleRender: RuleRender;
 
-  private readonly langIdentifier: LangIdentifier;
-
   private readonly translator: Translator;
 
   private readonly helperRenderer: HelperRenderer;
 
   private readonly promptRenderer: PromptRenderer;
+
+  private readonly browserLanguageDetector: BrowserLanguageDetector;
 
   private readonly browserContextDetector: BrowserContextDetector;
 
@@ -35,13 +35,13 @@ export default class App {
     this.appInfoCollector = new AppInfoCollector();
     this.ruleFinder = new RuleFinder();
     this.ruleRender = new RuleRender();
-    this.langIdentifier = new LangIdentifier();
-    this.translator = new Translator(this.langIdentifier);
+    this.translator = new Translator();
     this.helperRenderer = new HelperRenderer(this.translator);
     this.promptRenderer = new PromptRenderer();
-    this.browserContextDetector = new BrowserContextDetector();
+    this.browserLanguageDetector = new BrowserLanguageDetector();
+    this.browserContextDetector = new BrowserContextDetector(this.browserLanguageDetector);
     this.beforeInstallPromptDispatcher = new BeforeInstallPromptDispatcher(this.promptRenderer);
-    this.eligibilityChecker = new BeforeInstallPromptEligibilityChecker(this.translator);
+    this.eligibilityChecker = new BeforeInstallPromptEligibilityChecker();
   }
 
   public async start(debug: DebugConfig): Promise<void> {
@@ -49,12 +49,17 @@ export default class App {
       return;
     }
 
-    await navigator.serviceWorker.ready;
-
     const browserContext = this.browserContextDetector.getBrowserContext(debug);
-    if (browserContext === null) {
+    if (browserContext === undefined) {
       return;
     }
+
+    this.translator.setCurrentLanguage(browserContext.language);
+    if (!this.translator.isSupportedCurrentLang()) {
+      return;
+    }
+
+    await navigator.serviceWorker.ready;
 
     const appInfo = await this.appInfoCollector.getAppInfo();
 
