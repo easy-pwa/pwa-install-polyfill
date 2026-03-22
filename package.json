@@ -10,9 +10,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/easy-pwa/beforeinstallprompt-polyfill"
+    "url": "git+ssh://git@github.com/easy-pwa/beforeinstallprompt-polyfill.git"
   },
-  "homepage": "https://github.com/easy-pwa/beforeinstallprompt-polyfill/main/README.md",
+  "homepage": "https://github.com/easy-pwa/beforeinstallprompt-polyfill",
   "bugs": {
     "url": "https://github.com/easy-pwa/beforeinstallprompt-polyfill/issues"
   },
@@ -47,13 +47,13 @@
     "npm": ">=11"
   },
   "scripts": {
-    "prepare": "webpack --mode production",
+    "prepublishOnly": "webpack --mode production",
     "eslint": "eslint ./src",
     "eslint-fix": "eslint ./src --fix",
     "watch": "webpack --watch --mode development",
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "start:dev": "webpack-dev-server --mode development",
+    "server": "webpack-dev-server --mode development",
     "jest": "jest"
   },
   "keywords": [
@@ -72,6 +72,7 @@
     "application",
     "light",
     "polyfill",
-    "ios"
+    "ios",
+    "prompt"
   ]
 }

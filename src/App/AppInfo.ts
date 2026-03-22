@@ -1,4 +1,4 @@
-export default class {
+export default class AppInfo {
   public shortName: string;
 
   public name: string;

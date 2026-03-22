@@ -1,4 +1,4 @@
-export default class {
+export default class BrowserContext {
   public readonly os: string;
 
   public readonly browserName: string;

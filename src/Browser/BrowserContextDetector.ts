@@ -3,7 +3,7 @@ import BrowserContext from './BrowserContext';
 import BrowserLanguageDetector from './BrowserLanguageDetector';
 import DebugConfig from '../Debug/DebugConfig';
 
-export default class {
+export default class BrowserContextDetector {
   constructor(private readonly languageDetector: BrowserLanguageDetector) {}
 
   public getBrowserContext(debug: DebugConfig): BrowserContext|undefined {

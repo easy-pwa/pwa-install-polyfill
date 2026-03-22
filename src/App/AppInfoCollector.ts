@@ -1,7 +1,7 @@
 import Manifest, { WebManifestIcon } from 'web-manifest-reader';
 import AppInfo from './AppInfo';
 
-export default class {
+export default class AppInfoCollector {
   public async getAppInfo(): Promise<AppInfo> {
     const manifest = await Manifest.read();
     if (manifest === null || !manifest.short_name || !manifest.name || !manifest.icons) {
