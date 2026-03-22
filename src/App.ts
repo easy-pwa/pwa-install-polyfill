@@ -59,7 +59,7 @@ export default class App {
     const appInfo = await this.appInfoCollector.getAppInfo();
 
     const foundRule = this.ruleFinder.findForContext(browserContext);
-    if (foundRule === null) {
+    if (foundRule === undefined) {
       return;
     }
 
