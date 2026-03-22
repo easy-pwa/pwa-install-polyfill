@@ -44,7 +44,7 @@ export default class App {
     this.eligibilityChecker = new BeforeInstallPromptEligibilityChecker();
   }
 
-  public async start(debug: DebugConfig): Promise<void> {
+  public async start(debug: DebugConfig, isNativeEventFired: () => boolean): Promise<void> {
     if (!this.eligibilityChecker.isEligible()) {
       return;
     }
@@ -73,6 +73,8 @@ export default class App {
       this.helperRenderer.createHelperPopup(htmlHelperTemplate, appInfo);
     };
 
-    this.beforeInstallPromptDispatcher.dispatch(appInfo, helperCallback);
+    if (!isNativeEventFired()) {
+      this.beforeInstallPromptDispatcher.dispatch(appInfo, helperCallback);
+    }
   }
 }
