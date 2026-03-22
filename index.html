@@ -2,39 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>PWA Install Polyfill</title>
+    <title>BeforeInstallPrompt Polyfill</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="app.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="app.css">
     <link rel="manifest" href="manifest.webmanifest">
-    <script type="module" src="pwa-install-polyfill.js" defer="true"></script>
-    <script type="module" src="./js/pwa.js" defer="true"></script>
+    <!-- type="module" is used intentionally to prevent loading on old browsers:
+         browsers that don't support ES modules will silently ignore this script.
+         defer is implicit with type="module". -->
+    <script type="module" src="beforeinstallprompt-polyfill.js"></script>
+    <script src="./js/pwa.js" defer></script>
 </head>
 <body>
-    <main>
-        <h1>PWA invite Polyfill</h1>
-        <p>If your browser is compatible, you should see an automatic invitation in some seconds.</p>
-        <p>It only works on mobile phone.</p>
+    <header>
+        <div class="header-inner">
+            <div class="header-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                <span>Before Install Prompt Polyfill</span>
+            </div>
+        </div>
+    </header>
 
-        <h2>Force event for a specific device</h2>
-        <p>Select a browser to force an event in its context</p>
-        <form action="" method="GET" onchange="this.submit()">
-            <div><label for="browser">Browser</label></div>
-            <div>
-                <select id="browser" name="pwa_install_polyfill_debug_user_agent">
-                    <option value="">Select a browser</option>
+    <main>
+        <section class="card">
+            <h2>What is this?</h2>
+            <p>
+                This polyfill dispatches a synthetic <code>BeforeInstallPromptEvent</code> on browsers
+                that don't natively support it.
+                When <code>event.prompt()</code> is called, it shows a Chrome-like install dialog,
+                then step-by-step instructions specific to the user's browser.
+            </p>
+        </section>
+
+<section id="event-status" class="card status" hidden>
+            <div class="status-dot"></div>
+            <p><code>beforeinstallprompt</code> event fired — <a href="#" id="prompt-link">show install dialog</a></p>
+        </section>
+
+        <section id="native-support-notice" class="card notice" hidden>
+            <p>Your browser natively supports <code>BeforeInstallPromptEvent</code>. To test the polyfill, open this page in private browsing mode or in a browser that does not support it natively.</p>
+        </section>
+
+        <section id="debug-section" class="card">
+            <h2>Debug</h2>
+            <p>Override the user agent to simulate a specific browser and trigger the install flow.</p>
+            <form action="" method="GET">
+                <label for="browser">Simulate browser</label>
+                <select id="browser" name="beforeinstallprompt_polyfill_debug_user_agent">
+                    <option value="">— select a browser —</option>
                     <option value="Mozilla/5.0 (iPod; CPU iPhone OS 12_0 like macOS) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/12.0 Mobile/14A5335d Safari/602.1.50">
-                        iPhone
+                        iOS Safari 12
                     </option>
-                    <option value="Mozilla/5.0 (Android 11; Mobile; rv:100.0) Gecko/100.0 Firefox/100.0">
-                        Firefox
+                    <option value="Mozilla/5.0 (Android 14; Mobile; rv:130.0) Gecko/130.0 Firefox/130.0">
+                        Android Firefox 130
                     </option>
-                    <option value="Mozilla/5.0 (Linux; Android 11; SM-G975F) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/17.0 Chrome/91.0.4472.120 Mobile Safari/537.36">
-                        Samsung
+                    <option value="Mozilla/5.0 (Linux; Android 14; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/24.0 Chrome/117.0.0.0 Mobile Safari/537.36">
+                        Samsung Browser 24
                     </option>
                 </select>
-            </div>
-        </form>
+                <label for="lang">Simulate language</label>
+                <select id="lang" name="beforeinstallprompt_polyfill_debug_lang">
+                    <option value="">— select a language —</option>
+                    <option value="fr">French</option>
+                    <option value="en">English</option>
+                </select>
+                <button type="submit">Apply</button>
+            </form>
+        </section>
     </main>
 </body>
 </html>
