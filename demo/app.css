@@ -132,6 +132,20 @@ select {
 
 select:focus { outline: 2px solid var(--accent); outline-offset: 2px; border-color: transparent; }
 
+.card form button[type="submit"] {
+    margin-top: 16px;
+    padding: 9px 20px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.card form button[type="submit"]:hover { opacity: .88; }
+
 /* ── Notice card ──────────────────────────────────────────── */
 .notice {
     border-color: #f9ab00;
