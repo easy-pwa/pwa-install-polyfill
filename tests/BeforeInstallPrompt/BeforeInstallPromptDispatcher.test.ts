@@ -84,3 +84,4 @@ test('userChoice resolves with dismissed outcome', async () => {
 
   await expect(event.userChoice).resolves.toEqual({ outcome: 'dismissed', platform: '' });
 });
+
