@@ -11,8 +11,8 @@ test.each(rulesCases)('$useragent $expectedRule', ({ useragent, expectedRule }) 
   const browserContext = new BrowserContext(browserInfo.os!, browserInfo.name, parseFloat(browserInfo.version!));
   const ruleFinder = new RuleFinder();
   const rule = ruleFinder.findForContext(browserContext);
-  if (expectedRule === null) {
-    expect(rule).toBeNull();
+  if (expectedRule === undefined) {
+    expect(rule).toBeUndefined();
   } else {
     expect(rule).toBeInstanceOf(expectedRule);
   }
