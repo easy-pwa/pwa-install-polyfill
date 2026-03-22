@@ -1,5 +1,4 @@
 import Translator from '../../src/Translation/Translator';
-import LangIdentifier from '../../src/Translation/LangIdentifier';
 
 jest.mock('../../src/Translation/definitions', () => ({
   __esModule: true,
@@ -14,15 +13,11 @@ jest.mock('../../src/Translation/definitions', () => ({
   },
 }));
 
-const mockGetBrowserLang = jest.fn().mockReturnValue('fr');
-const mockLangIdentifier = { getBrowserLang: mockGetBrowserLang } as jest.Mocked<LangIdentifier>;
-
 let translator: Translator;
 
 beforeEach(() => {
-  jest.clearAllMocks();
-  mockGetBrowserLang.mockReturnValue('fr');
-  translator = new Translator(mockLangIdentifier);
+  translator = new Translator();
+  translator.setCurrentLanguage('fr');
 });
 
 test('isSupportedCurrentLang returns true for a supported language', () => {
@@ -30,8 +25,13 @@ test('isSupportedCurrentLang returns true for a supported language', () => {
 });
 
 test('isSupportedCurrentLang returns false for an unsupported language', () => {
-  mockGetBrowserLang.mockReturnValue('xx');
+  translator.setCurrentLanguage('xx');
   expect(translator.isSupportedCurrentLang()).toBe(false);
+});
+
+test('isSupportedCurrentLang throws when no language is set', () => {
+  const freshTranslator = new Translator();
+  expect(() => freshTranslator.isSupportedCurrentLang()).toThrow('Language has not been set.');
 });
 
 test('translate returns a simple key translation', () => {
@@ -51,6 +51,6 @@ test('translate throws for an unknown key', () => {
 });
 
 test('translate throws for an unsupported language', () => {
-  mockGetBrowserLang.mockReturnValue('xx');
+  translator.setCurrentLanguage('xx');
   expect(() => translator.translate('simple')).toThrow('Unsupported language');
 });

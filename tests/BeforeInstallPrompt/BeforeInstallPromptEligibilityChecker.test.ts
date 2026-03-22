@@ -1,16 +1,9 @@
 import BeforeInstallPromptEligibilityChecker from '../../src/BeforeInstallPrompt/BeforeInstallPromptEligibilityChecker';
-import Translator from '../../src/Translation/Translator';
-
-jest.mock('../../src/Translation/Translator');
-
-const mockIsSupportedCurrentLang = jest.fn().mockReturnValue(true);
-const mockTranslator = { isSupportedCurrentLang: mockIsSupportedCurrentLang } as unknown as jest.Mocked<Translator>;
 
 let checker: BeforeInstallPromptEligibilityChecker;
 
 beforeEach(() => {
   jest.clearAllMocks();
-  mockIsSupportedCurrentLang.mockReturnValue(true);
 
   // jsdom does not implement serviceWorker, add it manually
   Object.defineProperty(navigator, 'serviceWorker', { value: {}, configurable: true });
@@ -22,7 +15,7 @@ beforeEach(() => {
     value: jest.fn().mockReturnValue({ matches: false }),
   });
 
-  checker = new BeforeInstallPromptEligibilityChecker(mockTranslator);
+  checker = new BeforeInstallPromptEligibilityChecker();
 });
 
 afterEach(() => {
@@ -32,11 +25,6 @@ afterEach(() => {
 
 test('returns false when service worker is not available', () => {
   delete (navigator as any).serviceWorker;
-  expect(checker.isEligible()).toBe(false);
-});
-
-test('returns false when language is not supported', () => {
-  mockIsSupportedCurrentLang.mockReturnValue(false);
   expect(checker.isEligible()).toBe(false);
 });
 

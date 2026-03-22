@@ -1,18 +1,21 @@
 import lang, { TranslationDict } from './definitions';
-import LangIdentifier from './LangIdentifier';
 
 export default class Translator {
-  constructor(
-    private readonly langIdentifier: LangIdentifier
-  ) {
+  private currentLanguage?: string;
+
+  public setCurrentLanguage(language: string): void {
+    this.currentLanguage = language;
   }
 
   public isSupportedCurrentLang(): boolean {
-    return this.langIdentifier.getBrowserLang() in lang;
+    if (this.currentLanguage === undefined) {
+      throw new Error('Language has not been set.');
+    }
+    return this.currentLanguage in lang;
   }
 
   public translate(key: string, variables: Record<string, string> = {}): string {
-    const translations = lang[this.langIdentifier.getBrowserLang()];
+    const translations = lang[this.currentLanguage!];
     if (translations === undefined) {
       throw new Error('Unsupported language');
     }
