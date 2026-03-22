@@ -1,4 +1,8 @@
 {
+  "prompt": {
+    "cancel": "Annuler",
+    "install": "Installer"
+  },
   "helper": {
     "title": "Installer %app_name%",
     "done": "C'est fait !",
