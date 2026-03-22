@@ -1,6 +1,9 @@
 import AppInfo from '../App/AppInfo';
+import Translator from '../Translation/Translator';
 
 export default class PromptRenderer {
+  constructor(private readonly translator: Translator) {}
+
   public showPrompt(appInfo: AppInfo): Promise<BeforeInstallPromptEventUserChoice> {
     return new Promise(resolve => {
       const dialog = document.createElement('div');
@@ -15,8 +18,8 @@ export default class PromptRenderer {
             </div>
           </div>
           <div class="pwa-install-prompt-actions">
-            <button class="pwa-install-prompt-cancel">Annuler</button>
-            <button class="pwa-install-prompt-install">Installer</button>
+            <button class="pwa-install-prompt-cancel">${this.translator.translate('prompt.cancel')}</button>
+            <button class="pwa-install-prompt-install">${this.translator.translate('prompt.install')}</button>
           </div>
         </div>
       `;

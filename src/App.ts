@@ -37,7 +37,7 @@ export default class App {
     this.ruleRender = new RuleRender();
     this.translator = new Translator();
     this.helperRenderer = new HelperRenderer(this.translator);
-    this.promptRenderer = new PromptRenderer();
+    this.promptRenderer = new PromptRenderer(this.translator);
     this.browserLanguageDetector = new BrowserLanguageDetector();
     this.browserContextDetector = new BrowserContextDetector(this.browserLanguageDetector);
     this.beforeInstallPromptDispatcher = new BeforeInstallPromptDispatcher(this.promptRenderer);

@@ -1,12 +1,16 @@
 import PromptRenderer from '../../src/Prompt/PromptRenderer';
 import AppInfo from '../../src/App/AppInfo';
+import Translator from '../../src/Translation/Translator';
+
+const mockTranslate = jest.fn((key: string) => key);
+const mockTranslator = { translate: mockTranslate } as unknown as Translator;
 
 const appInfo = new AppInfo('MyApp', 'My Application', '/icon.png');
 
 let renderer: PromptRenderer;
 
 beforeEach(() => {
-  renderer = new PromptRenderer();
+  renderer = new PromptRenderer(mockTranslator);
   document.body.innerHTML = '';
   document.body.className = '';
 });
